@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "main" {
-  name = "yourdomain.com"
+  name = var.domain_name
 }
 
 resource "aws_cloudfront_distribution" "cf" {
