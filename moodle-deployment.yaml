@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodle
+spec:
+  selector:
+    matchLabels:
+      app: moodle
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: moodle
+    spec:
+      containers:
+      - image: bitnami/moodle:latest
+        name: moodle
+        env:
+        - name: MOODLE_DATABASE_HOST
+          value: mariadb
+        - name: MOODLE_DATABASE_PORT_NUMBER
+          value: "3306"
+        - name: MOODLE_DATABASE_NAME
+          value: "moodledb"
+        - name: MOODLE_DATABASE_USER
+          value: "moodleuser"
+        - name: MOODLE_DATABASE_PASSWORD
+          value: "your-password"
+        ports:
+        - containerPort: 80
+          name: moodle
+        volumeMounts:
+        - name: moodle-storage
+          mountPath: /bitnami/moodle
+      volumes:
+      - name: moodle-storage
+        persistentVolumeClaim:
+          claimName: moodle-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moodle
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: moodle
