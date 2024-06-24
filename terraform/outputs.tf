@@ -29,3 +29,7 @@ output "rds_endpoint" {
 output "redis_endpoint" {
   value = module.elasticache_rds.redis_endpoint
 }
+
+output "db_secrets_arn" {
+  value = module.secrets_manager.db_secrets_arn
+}
