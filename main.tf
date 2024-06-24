@@ -94,6 +94,8 @@ resource "aws_eks_cluster" "eks_cluster" {
   name     = "moodle-eks-cluster"
   role_arn = data.aws_iam_role.lab_role.arn
 
+  version = "1.29"
+
   vpc_config {
     subnet_ids         = aws_subnet.private[*].id
     security_group_ids = [aws_security_group.eks_cluster_sg.id]
