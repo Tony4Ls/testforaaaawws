@@ -26,6 +26,7 @@ module "moodle" {
   cluster_certificate_authority = module.eks.cluster_certificate_authority
   private_subnets = module.vpc.private_subnets
   alb_dns_name = module.alb.alb_dns_name
+  db_secrets_arn = module.secrets_manager.db_secrets_arn
 }
 
 module "cloudfront_route53" {
@@ -37,4 +38,9 @@ module "elasticache_rds" {
   source = "./elasticache_rds"
   vpc_id = module.vpc.vpc_id
   private_subnets = module.vpc.private_subnets
+  db_secrets_arn = module.secrets_manager.db_secrets_arn
+}
+
+module "secrets_manager" {
+  source = "./secrets_manager"
 }
