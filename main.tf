@@ -121,7 +121,6 @@ resource "aws_security_group" "lb_sg" {
 
 resource "aws_eks_cluster" "eks_cluster" {
   name     = "moodle-eks-cluster"
-  version  = "1.29"
   role_arn = data.aws_iam_role.lab_role.arn
 
   vpc_config {
