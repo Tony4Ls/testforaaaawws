@@ -26,7 +26,7 @@ spec:
         - name: MOODLE_DATABASE_USER
           value: "moodleuser"
         - name: MOODLE_DATABASE_PASSWORD
-          value: "your-password"
+          value: "sqlpassword"
         ports:
         - containerPort: 80
           name: moodle
