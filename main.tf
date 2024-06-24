@@ -61,6 +61,35 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_eip" "nat_eip" {
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "nat_gateway" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.public[0].id  # Place NAT Gateway in the first public subnet
+  tags = {
+    Name = "moodle-nat-gateway"
+  }
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.moodle_vpc.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway.id
+  }
+  tags = {
+    Name = "moodle-private-rt"
+  }
+}
+
+resource "aws_route_table_association" "private" {
+  count          = 2
+  subnet_id      = element(aws_subnet.private[*].id, count.index)
+  route_table_id = aws_route_table.private.id
+}
+
 resource "aws_security_group" "eks_cluster_sg" {
   vpc_id = aws_vpc.moodle_vpc.id
   tags = {
@@ -92,10 +121,8 @@ resource "aws_security_group" "lb_sg" {
 
 resource "aws_eks_cluster" "eks_cluster" {
   name     = "moodle-eks-cluster"
-  version = "1.29"
+  version  = "1.29"
   role_arn = data.aws_iam_role.lab_role.arn
-
-  
 
   vpc_config {
     subnet_ids         = aws_subnet.private[*].id
@@ -117,14 +144,10 @@ resource "aws_eks_node_group" "eks_node_group" {
 
   instance_types = ["t3.medium"]
 
-lifecycle {
+  lifecycle {
     create_before_destroy = true
     prevent_destroy       = false
   }
-
-  instance_profile = "LabInstanceProfile"
-}
-
 
   depends_on = [aws_eks_cluster.eks_cluster]
 }
@@ -155,4 +178,10 @@ resource "aws_lb_listener" "http" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.moodle.arn
   }
+}
+
+variable "region" {
+  description = "The AWS region to deploy in"
+  type        = string
+  default     = "us-east-1"
 }
