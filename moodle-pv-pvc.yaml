@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   awsElasticBlockStore:
-    volumeID: "<your-ebs-volume-id>"
+    volumeID: "vol-0c7a354caee8f9ab1"
     fsType: ext4
 ---
 apiVersion: v1
