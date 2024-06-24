@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: "vol-0c7a354caee8f9ab1"
+    fsType: ext4
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - image: mariadb:10.5
+        name: mariadb
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "rootpassword"
+        - name: MYSQL_DATABASE
+          value: "moodledb"
+        - name: MYSQL_USER
+          value: "moodleuser"
+        - name: MYSQL_PASSWORD
+          value: "sqlpassword"
+        ports:
+        - containerPort: 3306
+          name: mariadb
+        volumeMounts:
+        - name: mariadb-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mariadb-storage
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mariadb
