@@ -106,16 +106,25 @@ resource "aws_eks_cluster" "eks_cluster" {
 resource "aws_eks_node_group" "eks_node_group" {
   cluster_name    = aws_eks_cluster.eks_cluster.name
   node_group_name = "moodle-node-group"
-  node_role_arn   = data.aws_iam_role.lab_role.arn
+  node_role_arn   = "arn:aws:iam::410383089115:role/LabInstanceProfile"
   subnet_ids      = aws_subnet.private[*].id
 
   scaling_config {
-    desired_size = 2
-    max_size     = 3
+    desired_size = 1
+    max_size     = 2
     min_size     = 1
   }
 
   instance_types = ["t3.medium"]
+
+lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = false
+  }
+
+  instance_profile = "LabInstanceProfile"
+}
+
 
   depends_on = [aws_eks_cluster.eks_cluster]
 }
