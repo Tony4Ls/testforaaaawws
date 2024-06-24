@@ -133,7 +133,7 @@ resource "aws_eks_cluster" "eks_cluster" {
 resource "aws_eks_node_group" "eks_node_group" {
   cluster_name    = aws_eks_cluster.eks_cluster.name
   node_group_name = "moodle-node-group"
-  node_role_arn   = "arn:aws:iam::410383089115:role/LabInstanceProfile"
+  node_role_arn   = data.aws_iam_role.lab_role.arn  # Corrected IAM role ARN
   subnet_ids      = aws_subnet.private[*].id
 
   scaling_config {
