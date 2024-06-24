@@ -38,23 +38,48 @@ resource "kubernetes_deployment" "moodle" {
           env = [
             {
               name = "MOODLE_DATABASE_HOST"
-              value = aws_rds_cluster.aurora.endpoint
+              value_from = {
+                secret_key_ref = {
+                  name = "db-secrets"
+                  key  = "host"
+                }
+              }
             },
             {
               name = "MOODLE_DATABASE_PORT_NUMBER"
-              value = "3306"
+              value_from = {
+                secret_key_ref = {
+                  name = "db-secrets"
+                  key  = "port"
+                }
+              }
             },
             {
               name = "MOODLE_DATABASE_USER"
-              value = aws_rds_cluster.aurora.master_username
+              value_from = {
+                secret_key_ref = {
+                  name = "db-secrets"
+                  key  = "username"
+                }
+              }
             },
             {
               name = "MOODLE_DATABASE_NAME"
-              value = aws_rds_cluster.aurora.database_name
+              value_from = {
+                secret_key_ref = {
+                  name = "db-secrets"
+                  key  = "dbname"
+                }
+              }
             },
             {
               name = "MOODLE_DATABASE_PASSWORD"
-              value = aws_rds_cluster.aurora.master_password
+              value_from = {
+                secret_key_ref = {
+                  name = "db-secrets"
+                  key  = "password"
+                }
+              }
             },
             {
               name = "MOODLE_REDIS_HOST"
