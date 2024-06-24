@@ -57,3 +57,8 @@ variable "db_name" {
   description = "The name of the database for Moodle"
   default = "moodle"
 }
+
+variable "domain_name" {
+  description = "The DNS name for the application"
+  default = "commoncloud.tech"
+}
