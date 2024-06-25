@@ -8,9 +8,15 @@ module "vpc" {
 }
 
 module "eks" {
-  source = "./eks"
-  vpc_id = module.vpc.vpc_id
+  source          = "./eks"
+  cluster_name    = var.cluster_name
+  cluster_version = "1.23"
+  vpc_id          = module.vpc.vpc_id
   private_subnets = module.vpc.private_subnets
+  eks_node_instance_type = var.eks_node_instance_type
+  eks_node_count         = var.eks_node_count
+  eks_node_max_count     = var.eks_node_max_count
+  eks_node_min_count     = var.eks_node_min_count
 }
 
 module "alb" {
