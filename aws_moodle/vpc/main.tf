@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.4.0"
+  version = "3.10.0"  # Replace with the latest version if available
 
   name = "moodle-vpc"
   cidr = var.vpc_cidr
