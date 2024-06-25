@@ -4,12 +4,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "cluster_version" {
-  description = "EKS cluster version"
-  type        = string
-  default     = "1.30"
-}
-
 variable "vpc_cidr" {
   description = "VPC CIDR block"
   type        = string
@@ -28,10 +22,21 @@ variable "private_subnets" {
   default     = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
+variable "cluster_name" {
+  description = "EKS cluster name"
+  type        = string
+  default     = "moodle-cluster"
+}
+
+variable "cluster_version" {
+  description = "EKS cluster version"
+  type        = string
+  default     = "1.30"
+}
+
 variable "moodle_admin_user" {
   description = "Admin username for Moodle"
   type        = string
-  default     = "admin"
 }
 
 variable "moodle_admin_password" {
@@ -42,7 +47,6 @@ variable "moodle_admin_password" {
 variable "moodle_admin_email" {
   description = "Admin email for Moodle"
   type        = string
-  default     = "admin@commoncloud.tech"
 }
 
 variable "mariadb_root_password" {
@@ -53,7 +57,6 @@ variable "mariadb_root_password" {
 variable "mariadb_user" {
   description = "Username for MariaDB"
   type        = string
-  default     = "bn_moodle"
 }
 
 variable "mariadb_password" {
@@ -64,7 +67,6 @@ variable "mariadb_password" {
 variable "mariadb_database" {
   description = "Database name for MariaDB"
   type        = string
-  default     = "bitnami_moodle"
 }
 
 variable "domain_name" {
