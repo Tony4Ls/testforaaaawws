@@ -1,17 +1,16 @@
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
-  cluster_version = "1.23"
-  subnets         = var.private_subnets
+  cluster_version = var.cluster_version
   vpc_id          = var.vpc_id
+  subnet_ids      = var.private_subnets
 
-  node_groups = {
-    eks_nodes = {
-      desired_capacity = var.eks_node_count
-      max_capacity     = var.eks_node_max_count
-      min_capacity     = var.eks_node_min_count
-      instance_type    = var.eks_node_instance_type
-    }
+  node_group_defaults {
+    ami_type        = "AL2_x86_64"
+    instance_type   = var.eks_node_instance_type
+    desired_size    = var.eks_node_count
+    min_size        = var.eks_node_min_count
+    max_size        = var.eks_node_max_count
   }
 
   tags = {
