@@ -64,3 +64,7 @@ resource "helm_release" "moodle" {
     value = "8Gi"
   }
 }
+
+output "hostname" {
+  value = helm_release.moodle.status.load_balancer.ingress[0].hostname
+}
