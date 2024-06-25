@@ -34,26 +34,6 @@ variable "cluster_version" {
   default     = "1.30"
 }
 
-variable "moodle_admin_user" {
-  description = "Admin username for Moodle"
-  type        = string
-}
-
-variable "moodle_admin_password" {
-  description = "Admin password for Moodle"
-  type        = string
-}
-
-variable "moodle_admin_email" {
-  description = "Admin email for Moodle"
-  type        = string
-}
-
-variable "mariadb_root_password" {
-  description = "Root password for MariaDB"
-  type        = string
-}
-
 variable "mariadb_user" {
   description = "Username for MariaDB"
   type        = string
@@ -62,21 +42,4 @@ variable "mariadb_user" {
 variable "mariadb_password" {
   description = "Password for MariaDB"
   type        = string
-}
-
-variable "mariadb_database" {
-  description = "Database name for MariaDB"
-  type        = string
-}
-
-variable "domain_name" {
-  description = "The domain name for the CloudFront distribution"
-  type        = string
-  default     = "commoncloud.tech"
-}
-
-variable "db_instance_class" {
-  description = "Instance class for the DB instances"
-  type        = string
-  default     = "db.r5.large"
 }
