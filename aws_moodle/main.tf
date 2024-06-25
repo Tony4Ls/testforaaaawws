@@ -1,8 +1,3 @@
-# Remove this block from main.tf
-# provider "aws" {
-#   region = var.region
-# }
-
 module "vpc" {
   source  = "./vpc"
   aws_region     = var.aws_region
@@ -17,7 +12,6 @@ module "eks" {
   private_subnets = module.vpc.private_subnets
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
-  cluster_security_group_id = module.vpc.cluster_security_group_id
 }
 
 module "alb" {
@@ -39,6 +33,10 @@ module "secrets_manager" {
   source = "./secrets_manager"
   mariadb_user = var.mariadb_user
   mariadb_password = var.mariadb_password
+}
+
+provider "aws" {
+  region = var.region
 }
 
 data "aws_iam_role" "lab_role" {
