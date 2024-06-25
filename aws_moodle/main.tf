@@ -49,4 +49,6 @@ module "elasticache_rds" {
 
 module "secrets_manager" {
   source = "./secrets_manager"
+  mariadb_user = var.mariadb_user
+  mariadb_password = var.mariadb_password
 }
