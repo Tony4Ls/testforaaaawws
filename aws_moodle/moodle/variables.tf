@@ -33,24 +33,6 @@ variable "mariadb_database" {
   type        = string
 }
 
-variable "service_type" {
-  description = "Service type for Moodle"
-  type        = string
-  default     = "LoadBalancer"
-}
-
-variable "persistence_enabled" {
-  description = "Enable persistence for Moodle"
-  type        = bool
-  default     = true
-}
-
-variable "persistence_size" {
-  description = "Persistence size for Moodle"
-  type        = string
-  default     = "8Gi"
-}
-
 variable "private_subnets" {
   description = "List of private subnet IDs"
   type        = list(string)
