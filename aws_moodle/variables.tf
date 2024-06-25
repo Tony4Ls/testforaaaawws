@@ -4,10 +4,10 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "cluster_name" {
-  description = "EKS cluster name"
+variable "cluster_version" {
+  description = "EKS cluster version"
   type        = string
-  default     = "moodle-cluster"
+  default     = "1.30"
 }
 
 variable "vpc_cidr" {
