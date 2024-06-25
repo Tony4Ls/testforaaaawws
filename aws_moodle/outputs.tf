@@ -1,7 +1,3 @@
-output "vpc_id" {
-  value = module.vpc.vpc_id
-}
-
 output "eks_cluster_id" {
   value = module.eks.cluster_id
 }
@@ -11,9 +7,13 @@ output "eks_cluster_endpoint" {
 }
 
 output "eks_cluster_certificate_authority_data" {
-  value = module.eks.cluster_certificate_authority_data
+  value = module.eks.cluster_certificate_authority
+}
+
+output "eks_cluster_security_group_id" {
+  value = module.eks.cluster_security_group_id
 }
 
 output "moodle_url" {
-  value = helm_release.moodle.status.load_balancer.ingress[0].hostname
+  value = module.moodle.hostname
 }
