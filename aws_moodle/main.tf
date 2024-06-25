@@ -16,9 +16,13 @@ module "alb" {
 
 module "moodle" {
   source = "./moodle"
-  cluster_name = module.eks.cluster_id
-  cluster_endpoint = module.eks.cluster_endpoint
-  cluster_certificate_authority = module.eks.cluster_certificate_authority
+  moodle_admin_user = var.moodle_admin_user
+  moodle_admin_password = var.moodle_admin_password
+  moodle_admin_email = var.moodle_admin_email
+  mariadb_root_password = var.mariadb_root_password
+  mariadb_user = var.mariadb_user
+  mariadb_password = var.mariadb_password
+  mariadb_database = var.mariadb_database
   private_subnets = module.vpc.private_subnets
   alb_dns_name = module.alb.alb_dns_name
   db_secrets_arn = module.secrets_manager.db_secrets_arn
