@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.10.0"
+  version = "3.10.0"  # Ensure this is a version that does not include deprecated arguments
 
   name = "moodle-vpc"
   cidr = var.vpc_cidr
@@ -10,13 +10,12 @@ module "vpc" {
   public_subnets  = var.public_subnets
 
   enable_nat_gateway = true
-  single_nat_gateway = true
-  public_subnet_tags = {
-    "kubernetes.io/role/elb" = 1
-  }
-  private_subnet_tags = {
-    "kubernetes.io/role/internal-elb" = 1
-  }
+  single_nat_gateway = true  # Use a single NAT Gateway for all private subnets
+
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  instance_tenancy     = "default"
+  assign_generated_ipv6_cidr_block = true
 
   tags = {
     Name = "moodle-vpc"
