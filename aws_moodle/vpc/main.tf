@@ -1,23 +1,3 @@
-variable "vpc_cidr" {
-  description = "VPC CIDR block"
-  type        = string
-}
-
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-}
-
-variable "private_subnets" {
-  description = "List of private subnet IDs"
-  type        = list(string)
-}
-
-variable "public_subnets" {
-  description = "List of public subnet IDs"
-  type        = list(string)
-}
-
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.4.0"
