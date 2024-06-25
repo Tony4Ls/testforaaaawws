@@ -32,6 +32,7 @@ module "moodle" {
 module "cloudfront_route53" {
   source = "./cloudfront_route53"
   alb_dns_name = module.alb.alb_dns_name
+  domain_name  = var.domain_name
 }
 
 module "elasticache_rds" {
