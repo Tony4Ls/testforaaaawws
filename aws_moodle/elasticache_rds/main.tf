@@ -13,30 +13,55 @@ variable "db_secrets_arn" {
   type        = string
 }
 
-resource "aws_db_instance" "moodle_db" {
-  identifier        = "moodle-db"
-  engine            = "mysql"
-  instance_class    = "db.t3.micro"
-  allocated_storage = 20
-  name              = var.mariadb_database
-  username          = var.mariadb_user
-  password          = var.mariadb_password
-  vpc_security_group_ids = [module.eks.cluster_security_group_id]
-  db_subnet_group_name  = aws_db_subnet_group.moodle_db_subnet_group.name
+variable "db_instance_class" {
+  description = "Instance class for the DB instances"
+  type        = string
+  default     = "db.r5.large"
+}
 
-  skip_final_snapshot = true
+variable "db_name" {
+  description = "The name of the database"
+  type        = string
+  default     = "bitnami_moodle"
+}
+
+resource "aws_rds_cluster" "aurora" {
+  cluster_identifier      = "moodle-aurora-cluster"
+  engine                  = "aurora-mysql"
+  engine_version          = "5.7.mysql_aurora.2.07.1"
+  database_name           = var.db_name
+  master_username         = jsondecode(data.aws_secretsmanager_secret_version.db_secrets.secret_string).username
+  master_password         = jsondecode(data.aws_secretsmanager_secret_version.db_secrets.secret_string).password
+  vpc_security_group_ids  = [module.eks.cluster_security_group_id]
+  db_subnet_group_name    = aws_db_subnet_group.aurora_db_subnet_group.name
+  availability_zones      = ["us-east-1a", "us-east-1b"]
+  skip_final_snapshot     = true
 
   tags = {
-    Name = "moodle-db"
+    Name = "moodle-aurora-cluster"
   }
 }
 
-resource "aws_db_subnet_group" "moodle_db_subnet_group" {
-  name       = "moodle-db-subnet-group"
+resource "aws_rds_cluster_instance" "aurora_instances" {
+  count                = 2
+  identifier           = "moodle-aurora-instance-${count.index}"
+  cluster_identifier   = aws_rds_cluster.aurora.id
+  instance_class       = var.db_instance_class
+  engine               = aws_rds_cluster.aurora.engine
+  engine_version       = aws_rds_cluster.aurora.engine_version
+  db_subnet_group_name = aws_db_subnet_group.aurora_db_subnet_group.name
+
+  tags = {
+    Name = "moodle-aurora-instance-${count.index}"
+  }
+}
+
+resource "aws_db_subnet_group" "aurora_db_subnet_group" {
+  name       = "aurora-db-subnet-group"
   subnet_ids = var.private_subnets
 
   tags = {
-    Name = "moodle-db-subnet-group"
+    Name = "aurora-db-subnet-group"
   }
 }
 
@@ -63,8 +88,12 @@ resource "aws_elasticache_subnet_group" "moodle_cache_subnet_group" {
   }
 }
 
+data "aws_secretsmanager_secret_version" "db_secrets" {
+  secret_id = var.db_secrets_arn
+}
+
 output "rds_endpoint" {
-  value = aws_db_instance.moodle_db.endpoint
+  value = aws_rds_cluster.aurora.endpoint
 }
 
 output "redis_endpoint" {
