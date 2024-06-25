@@ -5,12 +5,13 @@ module "eks" {
   vpc_id          = var.vpc_id
   subnet_ids      = var.private_subnets
 
-  node_group_defaults {
-    ami_type        = "AL2_x86_64"
-    instance_type   = var.eks_node_instance_type
-    desired_size    = var.eks_node_count
-    min_size        = var.eks_node_min_count
-    max_size        = var.eks_node_max_count
+  node_groups = {
+    eks_nodes = {
+      desired_capacity = var.eks_node_count
+      max_capacity     = var.eks_node_max_count
+      min_capacity     = var.eks_node_min_count
+      instance_type    = var.eks_node_instance_type
+    }
   }
 
   tags = {
