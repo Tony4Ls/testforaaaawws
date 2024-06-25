@@ -62,4 +62,6 @@ variable "alb_dns_name" {
 }
 
 variable "db_secrets_arn" {
-  description = "ARN of the Secrets
+  description = "ARN of the Secrets Manager secret for the database"
+  type        = string
+}
