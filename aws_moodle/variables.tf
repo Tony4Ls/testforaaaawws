@@ -72,3 +72,9 @@ variable "domain_name" {
   type        = string
   default     = "commoncloud.tech"
 }
+
+variable "db_instance_class" {
+  description = "Instance class for the DB instances"
+  type        = string
+  default     = "db.r5.large"
+}
