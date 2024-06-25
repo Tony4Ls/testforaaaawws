@@ -43,3 +43,39 @@ variable "mariadb_password" {
   description = "Password for MariaDB"
   type        = string
 }
+
+variable "domain_name" {
+  description = "The domain name for the CloudFront distribution"
+  type        = string
+}
+
+variable "moodle_admin_user" {
+  description = "Admin username for Moodle"
+  type        = string
+}
+
+variable "moodle_admin_password" {
+  description = "Admin password for Moodle"
+  type        = string
+}
+
+variable "moodle_admin_email" {
+  description = "Admin email for Moodle"
+  type        = string
+}
+
+variable "mariadb_root_password" {
+  description = "Root password for MariaDB"
+  type        = string
+}
+
+variable "mariadb_database" {
+  description = "Database name for MariaDB"
+  type        = string
+}
+
+variable "db_instance_class" {
+  description = "Instance class for the DB instances"
+  type        = string
+  default     = "db.r5.large"
+}
