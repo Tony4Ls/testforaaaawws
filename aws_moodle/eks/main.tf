@@ -3,8 +3,8 @@ module "eks" {
   version         = "18.0.0"
   cluster_name    = var.cluster_name
   cluster_version = "1.30"
-  subnets         = var.private_subnets
   vpc_id          = var.vpc_id
+  subnet_ids      = var.private_subnets
 
   node_groups = {
     eks_nodes = {
