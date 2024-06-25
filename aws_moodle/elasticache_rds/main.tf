@@ -1,3 +1,18 @@
+variable "vpc_id" {
+  description = "The ID of the VPC"
+  type        = string
+}
+
+variable "private_subnets" {
+  description = "List of private subnet IDs"
+  type        = list(string)
+}
+
+variable "db_secrets_arn" {
+  description = "ARN of the Secrets Manager secret for the database"
+  type        = string
+}
+
 resource "aws_db_instance" "moodle_db" {
   identifier        = "moodle-db"
   engine            = "mysql"
