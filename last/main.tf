@@ -9,7 +9,7 @@ data "aws_iam_role" "lab_role" {
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "moodle_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "10.6.9.0/16"
   tags = {
     Name = "moodle-vpc"
   }
