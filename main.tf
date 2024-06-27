@@ -122,10 +122,7 @@ resource "aws_eks_node_group" "eks_node_group" {
 
   instance_types = ["t3.medium"]
 
-  lifecycle {
-    create_before_destroy = true
-    prevent_destroy       = false
-  }
+
 
   depends_on = [aws_eks_cluster.eks_cluster]
 }
