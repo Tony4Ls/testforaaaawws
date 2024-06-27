@@ -5,13 +5,13 @@ nano ~/.aws/credentials
 #
 #
 
-wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip 
+sudo yum install -y yum-utils
 
-unzip terraform_1.5.0_linux_amd64.zip 
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 
-sudo mv terraform /usr/local/bin/ 
+sudo yum -y install terraform
 
-terraform -v 
+terraform version
 
 #
 #
@@ -45,4 +45,25 @@ eksctl version
 #
 #
 
-git clone https://github.com/Tony4Ls/testforaaaawws.git
+sudo yum install -y curl tar
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+
+chmod 700 get_helm.sh
+
+./get_helm.sh
+
+helm version
+
+#
+#
+
+helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+
+helm repo update
+
+helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver --namespace kube-system
+
+kubectl get pods -n kube-system -l "app.kubernetes.io/name=aws-ebs-csi-driver,app.kubernetes.io/instance=aws-ebs-csi-driver"
+
+
