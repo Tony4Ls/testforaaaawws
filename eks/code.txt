@@ -1,3 +1,5 @@
+aws eks --region us-east-1 updata-kubeconfig --name 4122-eks-cluster
+
 kubectl apply -f pv.yaml
 kubectl apply -f mariadb.yaml
 kubectl apply -f moodle.yaml
