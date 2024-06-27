@@ -1,0 +1,21 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: 4122-eks
+  region: us-east-1
+
+fargateProfiles:
+  - name: default
+    selectors:
+      - namespace: default
+  - name: moodle
+    selectors:
+      - namespace: default
+        labels:
+          app: moodle
+  - name: mariadb
+    selectors:
+      - namespace: default
+        labels:
+          app: mariadb
