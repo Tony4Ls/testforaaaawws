@@ -1,4 +1,4 @@
-kubectl apply -f persistent-volumes.yaml
+kubectl apply -f pv.yaml
 kubectl apply -f mariadb.yaml
 kubectl apply -f moodle.yaml
 
