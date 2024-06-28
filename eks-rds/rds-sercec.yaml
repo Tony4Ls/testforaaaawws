@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: moodle-db-secret
+  namespace: default
+type: Opaque
+data:
+  username: YWRtaW4=  # base64 encoded value of 'admin'
+  password: YWRtaW4xMjM0  # base64 encoded value of 'admin1234'
+  database: Yml0bmFtaV9tb29kbGU=  # base64 encoded value of 'bitnami_moodle'
