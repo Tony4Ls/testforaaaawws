@@ -32,7 +32,7 @@ spec:
         - name: MOODLE_DATABASE_NAME
           value: "bitnami_moodle"
         - name: MOODLE_DATABASE_HOST
-          value: <MOODLE_DATABASE_HOST>
+          value: "mariadb"
         volumeMounts:
         - name: moodle-storage
           mountPath: /bitnami/moodle
