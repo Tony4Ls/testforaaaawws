@@ -66,4 +66,7 @@ helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver --namespac
 
 kubectl get pods -n kube-system -l "app.kubernetes.io/name=aws-ebs-csi-driver,app.kubernetes.io/instance=aws-ebs-csi-driver"
 
+#
+#
 
+git clone https://github.com/Tony4Ls/testforaaaawws.git
