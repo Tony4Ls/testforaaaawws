@@ -44,8 +44,6 @@ spec:
           value: "auroradb-instance-1.cvasowsie66n.us-east-1.rds.amazonaws.com"
         - name: MOODLE_DATABASE_TYPE
           value: "auroramysql"
-        - name: BITNAMI_DEBUG
-          value: "true"
         volumeMounts:
         - name: moodle-storage
           mountPath: /bitnami/moodle
