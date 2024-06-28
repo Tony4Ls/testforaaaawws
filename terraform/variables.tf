@@ -32,5 +32,5 @@ variable "rds_master_username" {
 variable "rds_engine_version" {
   description = "The engine version for the RDS instance"
   type        = string
-  default     = "5.7.mysql_aurora.2.07.2"
+  default     = "8.0.mysql_aurora.3.05.2" 
 }
