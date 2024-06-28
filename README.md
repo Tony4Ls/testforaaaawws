@@ -1,4 +1,4 @@
-# connect to aws use aws cli
+# connect to aws use cloud9
 
 aws configure
 
@@ -69,4 +69,12 @@ helm repo update
 helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver --namespace kube-system
 
 kubectl get pods -n kube-system -l "app.kubernetes.io/name=aws-ebs-csi-driver,app.kubernetes.io/instance=aws-ebs-csi-driver"
+
+# setup yaml
+
+kubectl apply -f pv.yaml
+
+kubectl apply -f mariadb.yaml
+
+kubectl apply -f moodle.yaml
 
