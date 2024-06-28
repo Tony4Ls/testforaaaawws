@@ -1,3 +1,7 @@
+data "aws_iam_role" "lab_role" {
+  name = "LabRole"
+}
+
 resource "aws_db_subnet_group" "aurora_subnet_group" {
   name       = "aurora-subnet-group"
   subnet_ids = aws_subnet.private[*].id
