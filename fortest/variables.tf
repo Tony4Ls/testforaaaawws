@@ -35,11 +35,6 @@ variable "rds_engine_version" {
   default     = "5.7.mysql_aurora.2.07.2"
 }
 
-variable "rds_endpoint" {
-  description = "The endpoint for the RDS instance"
-  type        = string
-}
-
 variable "rds_database_name" {
   description = "The database name for the RDS instance"
   type        = string
