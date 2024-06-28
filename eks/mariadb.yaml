@@ -13,9 +13,6 @@ spec:
     metadata:
       labels:
         app: mariadb
-    spec:
-      securityContext:
-        fsGroup: 1001  # or another appropriate group ID
       containers:
       - name: mariadb
         image: bitnami/mariadb:latest
