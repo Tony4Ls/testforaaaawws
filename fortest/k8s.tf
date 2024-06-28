@@ -90,7 +90,7 @@ resource "kubernetes_deployment" "moodle" {
           }
           env {
             name  = "MOODLE_DATABASE_HOST"
-            value = data.aws_rds_cluster_endpoint.aurora_cluster.endpoint
+            value = module.rds.rds_endpoint
           }
           volume_mount {
             name       = "moodle-storage"
