@@ -61,3 +61,7 @@ resource "aws_rds_cluster_instance" "aurora_reader" {
     Name = "aurora-reader"
   }
 }
+
+output "rds_endpoint" {
+  value = aws_rds_cluster.aurora_cluster.endpoint
+}
