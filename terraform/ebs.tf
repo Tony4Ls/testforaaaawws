@@ -3,16 +3,16 @@ resource "aws_ebs_volume" "volume_a" {
   size              = 20
   type              = "gp2"
   tags = {
-    Name = "ebs-us-east-1a"
+    Name = "ebs-A"
   }
 }
 
 resource "aws_ebs_volume" "volume_b" {
-  availability_zone = "us-east-1b"
+  availability_zone = "us-east-1a"
   size              = 20
   type              = "gp2"
   tags = {
-    Name = "ebs-us-east-1b"
+    Name = "ebs-B"
   }
 }
 
@@ -21,15 +21,15 @@ resource "aws_ebs_volume" "volume_c" {
   size              = 20
   type              = "gp2"
   tags = {
-    Name = "ebs2-us-east-1a"
+    Name = "ebs-C"
   }
 }
 
 resource "aws_ebs_volume" "volume_d" {
-  availability_zone = "us-east-1b"
+  availability_zone = "us-east-1a"
   size              = 20
   type              = "gp2"
   tags = {
-    Name = "ebs2-us-east-1b"
+    Name = "ebs-D"
   }
 }
