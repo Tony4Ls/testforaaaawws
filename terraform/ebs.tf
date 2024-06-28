@@ -1,3 +1,4 @@
+# EBS Volume A
 resource "aws_ebs_volume" "volume_a" {
   availability_zone = "us-east-1a"
   size              = 20
@@ -7,6 +8,7 @@ resource "aws_ebs_volume" "volume_a" {
   }
 }
 
+# EBS Volume B
 resource "aws_ebs_volume" "volume_b" {
   availability_zone = "us-east-1a"
   size              = 20
@@ -16,6 +18,7 @@ resource "aws_ebs_volume" "volume_b" {
   }
 }
 
+# EBS Volume C
 resource "aws_ebs_volume" "volume_c" {
   availability_zone = "us-east-1a"
   size              = 20
@@ -25,6 +28,7 @@ resource "aws_ebs_volume" "volume_c" {
   }
 }
 
+# EBS Volume D
 resource "aws_ebs_volume" "volume_d" {
   availability_zone = "us-east-1a"
   size              = 20
