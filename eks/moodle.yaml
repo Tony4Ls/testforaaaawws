@@ -26,13 +26,13 @@ spec:
         - name: ALLOW_EMPTY_PASSWORD
           value: "yes"
         - name: MOODLE_DATABASE_USER
-          value: "bn_moodle"
+          value: "admin"
         - name: MOODLE_DATABASE_PASSWORD
-          value: "bitnami"
+          value: "admin1234"
         - name: MOODLE_DATABASE_NAME
           value: "bitnami_moodle"
         - name: MOODLE_DATABASE_HOST
-          value: "mariadb"
+          value: "endpoint"
         volumeMounts:
         - name: moodle-storage
           mountPath: /bitnami/moodle
