@@ -46,7 +46,7 @@ eksctl version
 
 # updata-kubeconfig
 
-aws eks --region us-east-1 updata-kubeconfig --name 4122-eks-cluster
+aws eks updata-kubeconfig --region us-east-1 --name 4122-eks-cluster
 
 # install helm
 
