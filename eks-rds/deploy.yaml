@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodle
+  labels:
+    app: moodle
+spec:
+  selector:
+    matchLabels:
+      app: moodle
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: moodle
+    spec:
+      containers:
+      - name: moodle
+        image: bitnami/moodle:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        - name: MOODLE_DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: username
+        - name: MOODLE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: password
+        - name: MOODLE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: database
+        - name: MOODLE_DATABASE_HOST
+          value: "auroradb-instance-1.cvasowsie66n.us-east-1.rds.amazonaws.com"
+        - name: MOODLE_DATABASE_TYPE
+          value: "auroramysql"
+        - name: BITNAMI_DEBUG
+          value: "true"
+        volumeMounts:
+        - name: moodle-storage
+          mountPath: /bitnami/moodle
+      volumes:
+      - name: moodle-storage
+        persistentVolumeClaim:
+          claimName: moodle-pvc
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: moodle-db-secret
+  namespace: default
+type: Opaque
+data:
+  username: YWRtaW4=  # base64 encoded value of 'admin'
+  password: YWRtaW4xMjM0  # base64 encoded value of 'admin1234'
+  database: Yml0bmFtaV9tb29kbGU=  # base64 encoded value of 'bitnami_moodle'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moodle
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: https
+    port: 443
+    targetPort: 8443
+  selector:
+    app: moodle
