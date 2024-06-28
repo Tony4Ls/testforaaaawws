@@ -72,6 +72,8 @@ kubectl get pods -n kube-system -l "app.kubernetes.io/name=aws-ebs-csi-driver,ap
 
 # setup yaml
 
+# if use rds need to connect in and create a moodle database first
+
 kubectl apply -f pv.yaml
 
 kubectl apply -f mariadb.yaml
