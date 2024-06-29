@@ -26,9 +26,9 @@ resource "aws_eks_cluster" "eks_cluster" {
 
 # Creating the EKS Node Group
 resource "aws_eks_node_group" "eks_node_group" {
-  cluster_name    = aws_iam_role.eks_node_role.arn
+  cluster_name    = aws_eks_cluster.eks_cluster.name
   node_group_name = "4122-node-group"
-  node_role_arn   = data.aws_iam_role.lab_role.arn
+  node_role_arn   = aws_iam_role.eks_node_role.arn
   subnet_ids      = aws_subnet.private[*].id
 
   scaling_config {
