@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodle
+  namespace: moodle
+  labels:
+    app: moodle
+spec:
+  selector:
+    matchLabels:
+      app: moodle
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: moodle
+    spec:
+      securityContext:
+        fsGroup: 1001
+      containers:
+      - name: moodle
+        image: bitnami/moodle:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: allow-empty-password
+        - name: MOODLE_DATABASE_TYPE
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: database-type
+        - name: MOODLE_DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: username
+        - name: MOODLE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: password
+        - name: MOODLE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: database
+        - name: MOODLE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: moodle-db-secret
+              key: database-host
+        volumeMounts:
+        - name: moodle-storage
+          mountPath: /bitnami/moodle
+      volumes:
+      - name: moodle-storage
+        persistentVolumeClaim:
+          claimName: moodle-pvc
